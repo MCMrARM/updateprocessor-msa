@@ -31,7 +31,7 @@ void Account::updateDetails(std::string username, std::shared_ptr<msa::LegacyTok
 
 std::unordered_map<SecurityScope, TokenResponse> Account::requestTokens(LoginManager& loginManager,
                                                                         std::vector<SecurityScope> const& scopes,
-                                                                        std::string const& clientAppUri) {
+                                                                        std::string const& hostingAppId) {
     std::lock_guard<std::mutex> lock (tokensMutex);
     std::vector<SecurityScope> requestScopes;
     std::unordered_map<SecurityScope, TokenResponse> ret;
@@ -49,7 +49,7 @@ std::unordered_map<SecurityScope, TokenResponse> Account::requestTokens(LoginMan
         return ret;
 
     network::AccountTokenRequest req(daToken, loginManager.requestDeviceAuth().token, requestScopes);
-    req.clientAppUri = clientAppUri;
+    req.hostingAppId = hostingAppId;
     auto resp = req.send();
     std::vector<std::shared_ptr<Token>> newTokens;
     if (resp.error) {
@@ -74,7 +74,7 @@ std::unordered_map<SecurityScope, TokenResponse> Account::requestTokens(LoginMan
             continue;
         ret[token.getSecurityScope()] = token;
     }
-    if (newTokens.size() > 0 && tokenCache)
-        tokenCache->onTokensReceived(*this, newTokens);
+//    if (newTokens.size() > 0 && tokenCache)
+//        tokenCache->onTokensReceived(*this, newTokens);
     return ret;
 }

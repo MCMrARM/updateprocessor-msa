@@ -13,11 +13,9 @@ using namespace rapidxml;
 void AccountTokenRequest::buildHeaderAuthInfo(rapidxml::xml_document<char>& doc,
                                               rapidxml::xml_node<char>& authInfo) const {
     SecurityTokenRequest::buildHeaderAuthInfo(doc, authInfo);
-    authInfo.append_node(doc.allocate_node(node_element, "ps:InlineUX", DEVICE_TYPE));
-    authInfo.append_node(doc.allocate_node(node_element, "ps:ConsentFlags", "1"));
-    authInfo.append_node(doc.allocate_node(node_element, "ps:IsConnected", "1"));
-    if (clientAppUri.length() > 0)
-        authInfo.append_node(doc.allocate_node(node_element, "ps:ClientAppURI", clientAppUri.c_str(), 0, clientAppUri.length()));
+    authInfo.append_node(doc.allocate_node(node_element, "ps:InlineUX", "Silent"));
+    //authInfo.append_node(doc.allocate_node(node_element, "ps:ConsentFlags", "1"));
+    //authInfo.append_node(doc.allocate_node(node_element, "ps:IsConnected", "1"));
 }
 
 void AccountTokenRequest::buildHeaderSecurity(rapidxml::xml_document<char>& doc, rapidxml::xml_node<char>& header,
@@ -44,7 +42,7 @@ std::string AccountTokenRequest::generateDeviceProofUri() const {
     values.emplace_back("ct", std::to_string(duration_cast<seconds>(ServerTime::getServerTime().time_since_epoch()).count()));
     values.emplace_back("hashalg", "SHA256");
     values.emplace_back("bver", BINARY_VERSION_STRING);
-    values.emplace_back("appid", HOSTING_APP);
+    values.emplace_back("appid", hostingAppId);
     values.emplace_back("da", deviceToken->getXmlData());
     values.emplace_back("nonce", Base64::encode(nonce));
 

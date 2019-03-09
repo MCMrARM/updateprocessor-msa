@@ -13,8 +13,9 @@ void DeviceAddRequest::createBody(rapidxml::xml_document<char>& doc) const {
     doc.append_node(root);
 
     auto clientInfo = doc.allocate_node(node_element, "ClientInfo", "");
-    clientInfo->append_attribute(doc.allocate_attribute("name", "MSAAndroidApp"));
+    clientInfo->append_attribute(doc.allocate_attribute("name", "IDCRL"));
     clientInfo->append_attribute(doc.allocate_attribute("version", "1.0"));
+    clientInfo->append_node(doc.allocate_node(node_element, "BinaryVersion", "19"));
     root->append_node(clientInfo);
 
     auto authentication = doc.allocate_node(node_element, "Authentication", "");

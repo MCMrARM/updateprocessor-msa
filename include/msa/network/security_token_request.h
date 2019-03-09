@@ -26,8 +26,8 @@ protected:
     static const char* const NAMESPACE_WS_TRUST;
 
     static const char* const BINARY_VERSION_STRING;
+    static const char* const UI_VERSION_STRING;
     static const char* const DEVICE_TYPE;
-    static const char* const HOSTING_APP;
 
     std::string messageId;
 
@@ -72,6 +72,8 @@ private:
     SecurityTokenResponse handleResponseBody(rapidxml::xml_node<char> const& body) const;
 
 public:
+    std::string hostingAppId = "{DF60E2DF-88AD-4526-AE21-83D130EF0F68}";
+
     SecurityTokenRequestBase();
 
 };

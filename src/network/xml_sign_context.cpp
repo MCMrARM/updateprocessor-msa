@@ -27,7 +27,7 @@ rapidxml::xml_node<char>* XMLSignContext::createNonceNode(rapidxml::xml_document
     refKeyId->append_attribute(doc.allocate_attribute("ValueType", "http://docs.oasis-open.org/wss/2004/XX/oasis-2004XX-wss-saml-token-profile-1.0#SAMLAssertionID"));
     ref->append_node(refKeyId);
     auto refRef = doc.allocate_node(node_element, "wsse:Reference");
-    refRef->append_attribute(doc.allocate_attribute("URI", ""));
+    refRef->append_attribute(doc.allocate_attribute("URI", "#DeviceDAToken"));
     ref->append_node(refRef);
     tokenNode->append_node(ref);
 

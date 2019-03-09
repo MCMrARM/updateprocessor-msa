@@ -59,7 +59,7 @@ public:
 
     std::unordered_map<SecurityScope, TokenResponse> requestTokens(LoginManager& loginManager,
                                                                    std::vector<SecurityScope> const& scopes,
-                                                                   std::string const& clientAppUri = std::string());
+                                                                   std::string const& hostingAppId = std::string());
 
     std::string const& getPUID() const { return puid; }
 

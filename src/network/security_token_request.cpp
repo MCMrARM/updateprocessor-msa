@@ -20,9 +20,9 @@ const char* const SecurityTokenRequestBase::NAMESPACE_WS_ADDRESSING = "http://ww
 const char* const SecurityTokenRequestBase::NAMESPACE_WS_SECURECONVERSATION = "http://schemas.xmlsoap.org/ws/2005/02/sc";
 const char* const SecurityTokenRequestBase::NAMESPACE_WS_TRUST = "http://schemas.xmlsoap.org/ws/2005/02/trust";
 
-const char* const SecurityTokenRequestBase::BINARY_VERSION_STRING = "11";
+const char* const SecurityTokenRequestBase::BINARY_VERSION_STRING = "19";
+const char* const SecurityTokenRequestBase::UI_VERSION_STRING = "1";
 const char* const SecurityTokenRequestBase::DEVICE_TYPE = "Android";
-const char* const SecurityTokenRequestBase::HOSTING_APP = "{F501FD64-9070-46AB-993C-6F7B71D8D883}"; // MSA login library app id;
 
 SecurityTokenRequestBase::SecurityTokenRequestBase() {
     using namespace std::chrono;
@@ -99,8 +99,13 @@ void SecurityTokenRequestBase::buildHeader(rapidxml::xml_document<char>& doc, ra
 void SecurityTokenRequestBase::buildHeaderAuthInfo(rapidxml::xml_document<char>& doc,
                                                    rapidxml::xml_node<char>& authInfo) const {
     authInfo.append_node(doc.allocate_node(node_element, "ps:BinaryVersion", BINARY_VERSION_STRING));
-    authInfo.append_node(doc.allocate_node(node_element, "ps:DeviceType", DEVICE_TYPE));
-    authInfo.append_node(doc.allocate_node(node_element, "ps:HostingApp", HOSTING_APP));
+    authInfo.append_node(doc.allocate_node(node_element, "ps:UIVersion", UI_VERSION_STRING));
+    authInfo.append_node(doc.allocate_node(node_element, "ps:IsAdmin", "1"));
+    authInfo.append_node(doc.allocate_node(node_element, "ps:Cookies", ""));
+    authInfo.append_node(doc.allocate_node(node_element, "ps:RequestParams", "AQAAAAIAAABsYwQAAAAxMDMz"));
+    authInfo.append_node(doc.allocate_node(node_element, "ps:WindowsClientString", "d2TFWYN+emWKaAqzhhGYBeQgDt2GOG2cMcc8GFsVZtU="));
+    authInfo.append_node(doc.allocate_node(node_element, "ps:HostingApp", hostingAppId.c_str()));
+    authInfo.append_node(doc.allocate_node(node_element, "ps:ClientCapabilities", "1"));
 }
 
 void SecurityTokenRequestBase::buildTimestamp(rapidxml::xml_document<char>& doc, rapidxml::xml_node<char>& parent,

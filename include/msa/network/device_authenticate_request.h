@@ -17,6 +17,8 @@ protected:
     void buildBody(rapidxml::xml_document<char>& doc, rapidxml::xml_node<char>& body,
                    XMLSignContext& signContext) const override;
 
+    void buildHeaderAuthInfo(rapidxml::xml_document<char>& doc, rapidxml::xml_node<char>& authInfo) const override;
+
     DeviceAuthenticateResponse handleResponse(SecurityTokenResponse const& resp) const override;
 
 public:

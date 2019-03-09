@@ -30,7 +30,6 @@ protected:
 public:
     std::shared_ptr<LegacyToken> daToken, deviceToken;
     std::vector<SecurityScope> scopes;
-    std::string clientAppUri;
 
     AccountTokenRequest(std::shared_ptr<LegacyToken> daToken, std::shared_ptr<LegacyToken> deviceToken,
                         std::vector<SecurityScope> scopes = {})

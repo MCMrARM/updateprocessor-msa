@@ -4,6 +4,12 @@
 using namespace msa::network;
 using namespace rapidxml;
 
+void DeviceAuthenticateRequest::buildHeaderAuthInfo(rapidxml::xml_document<char> &doc,
+                                                    rapidxml::xml_node<char> &authInfo) const {
+    SecurityTokenRequest::buildHeaderAuthInfo(doc, authInfo);
+    authInfo.append_node(doc.allocate_node(node_element, "ps:InlineUX", "TokenBroker"));
+}
+
 void DeviceAuthenticateRequest::buildHeaderSecurity(rapidxml::xml_document<char>& doc, rapidxml::xml_node<char>& header,
                                                     XMLSignContext& signContext) const {
     auto usernameToken = doc.allocate_node(node_element, "wsse:UsernameToken");
