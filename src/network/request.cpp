@@ -69,6 +69,8 @@ std::string RequestBase::sendInternal() const {
     if (CURLManager::initHook != nullptr)
         CURLManager::initHook(curl);
     CURLcode ret = curl_easy_perform(curl);
+    curl_easy_cleanup(curl);
+    curl_slist_free_all(headers);
 #ifdef MSA_LOG_NETWORK
     Log::trace("MSANetwork", "Reply (%i): %s", ret, output.str().c_str());
     printf("%s\n", output.str().c_str());
